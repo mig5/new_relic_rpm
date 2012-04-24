@@ -7,8 +7,16 @@
 /**
  * New Relic RPM settings form.
  */
-function new_relic_rpm_settings(&$form_state) {
+function new_relic_rpm_settings($form, &$form_state) {
   $form = array();
+
+  $form['new_relic_rpm_appname'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Application name'),
+    '#description' => t('Enter an optional unique Application name to track this site'),
+    '#default_value' => variable_get('new_relic_rpm_appname', ''),
+  );
+
 
   $form['new_relic_rpm_track_drush'] = array(
     '#type' => 'select',
@@ -82,7 +90,7 @@ function new_relic_rpm_settings(&$form_state) {
 /**
  * Form callback for manually creating a deployment.
  */
-function new_relic_rpm_deploy(&$form_state) {
+function new_relic_rpm_deploy($form, &$form_state) {
   $form = array();
 
   $form['deploy_user'] = array(
@@ -132,6 +140,7 @@ function new_relic_rpm_deploy_submit($form, &$form_state) {
     drupal_set_message(t('New Relic RPM deployment created successfully'), 'status');
   }
   else {
-    drupal_set_message(t('New Relic RPM deployment failed to be created. Please ensure you have your account configured on the <a href="!settings">New Relic RPM Drupal admin page</a>.', array('!settings' => url('admin/settings/new-relic-rpm'))), 'error');
+    drupal_set_message(t('New Relic RPM deployment failed to be created. Please ensure you have your account configured on the <a href="@settings">New Relic RPM Drupal admin page</a>.', array('@settings' => url('admin/config/new-relic-rpm'))), 'error');
   }
+  var_dump($form_state);
 }
