@@ -94,8 +94,10 @@ function new_relic_rpm_boot() {
   // Handle cases where this getting called from command line and q isn't set.
   $path = isset($_GET['q']) ? $_GET['q'] : '';
 
-  if(variable_get('new_relic_rpm_appname', 'PHP Application')) {
-    newrelic_set_appname(variable_get('new_relic_rpm_appname', 'PHP Application'));
+  if (extension_loaded('newrelic')) {
+    if(variable_get('new_relic_rpm_appname', 'PHP Application')) {
+      newrelic_set_appname(variable_get('new_relic_rpm_appname', 'PHP Application'));
+    }
   }
 
   if (!empty($exclu_urls)) {
